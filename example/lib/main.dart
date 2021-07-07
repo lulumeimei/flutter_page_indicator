@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_page_indicator/flutter_page_indicator.dart';
-
-import "package:transformer_page_view/transformer_page_view.dart";
+import 'package:transformer_page_view/transformer_page_view.dart';
 
 void main() => runApp(new MyApp());
 
@@ -29,7 +28,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+  MyHomePage({Key? key, required this.title}) : super(key: key);
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -51,7 +50,8 @@ class RadioGroup extends StatefulWidget {
 
   final ValueChanged<int> onIndexChanged;
 
-  const RadioGroup({Key key, this.titles, this.onIndexChanged})
+  const RadioGroup(
+      {Key? key, required this.titles, required this.onIndexChanged})
       : super(key: key);
 
   @override
@@ -74,9 +74,9 @@ class _RadioGroupState extends State<RadioGroup> {
             new Radio<int>(
                 value: index,
                 groupValue: _index,
-                onChanged: (int index) {
+                onChanged: (int? index) {
                   setState(() {
-                    _index = index;
+                    _index = index!;
                     widget.onIndexChanged(_index);
                   });
                 }),
@@ -98,7 +98,7 @@ class _MyHomePageState extends State<MyHomePage> {
   double size = 20.0;
   double activeSize = 30.0;
 
-  PageController controller;
+  late TransformerPageController controller;
 
   PageIndicatorLayout layout = PageIndicatorLayout.SLIDE;
 
@@ -108,7 +108,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void initState() {
-    controller = new PageController();
+    controller = new TransformerPageController();
     super.initState();
   }
 
@@ -143,13 +143,13 @@ class _MyHomePageState extends State<MyHomePage> {
               children: <Widget>[
                 new Checkbox(
                     value: loop,
-                    onChanged: (bool value) {
+                    onChanged: (bool? value) {
                       setState(() {
-                        if (value) {
+                        if ((value)! == true) {
                           controller = new TransformerPageController(
                               itemCount: 4, loop: true);
                         } else {
-                          controller = new PageController(
+                          controller = new TransformerPageController(
                             initialPage: 0,
                           );
                         }
